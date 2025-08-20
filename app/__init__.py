@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_bootstrap import Bootstrap5
+from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
 from flask_login import LoginManager
@@ -28,7 +28,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
 ckeditor = CKEditor(app)
-Bootstrap5(app)
+Bootstrap(app)
 db.init_app(app)
 
 # Configure Flask-Login
