@@ -1,0 +1,13 @@
+.vercel
+# Python cache
+__pycache__/
+
+# Instance folder for local DB
+instance/
+
+# Virtual Environment Folder (VERY IMPORTANT)
+venv/
+.venv/
+
+# System files
+.DS_Store
