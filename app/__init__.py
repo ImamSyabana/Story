@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 import os
 from dotenv import load_dotenv, find_dotenv
+from markupsafe import Markup
 
 # Find and load environment variables from .env file
 dotenv_path = find_dotenv()
@@ -23,7 +24,7 @@ app = Flask(__name__)
 
 # Configure the app
 app.config['SECRET_KEY'] = os.getenv("FLASK_KEY")
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB_URL', 'sqlite:///posts.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
