@@ -65,7 +65,11 @@ def load_user(id):
 class Base(DeclarativeBase):
     pass
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL', 'sqlite:///posts.db')
+# Temporarily comment out the original line
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL', 'sqlite:///posts.db')
+
+# Add this line, pasting your full, corrected URL inside the quotes
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://neondb_owner:npg_0nqtbHFOEG7P@ep-morning-queen-adhe20kk-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 
 db = SQLAlchemy(model_class=Base)
