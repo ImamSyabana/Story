@@ -5,9 +5,6 @@ from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user,login_required
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-
-import logging
 from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text, ForeignKey
 from functools import wraps
@@ -16,8 +13,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreatePostForm
 from forms import RegisterForm, LoginForm, CommentForm
 from bs4 import BeautifulSoup
-import os
-from dotenv import find_dotenv, load_dotenv
 
 '''
 Make sure the required packages are installed: 
@@ -32,16 +27,8 @@ pip3 install -r requirements.txt
 This will install the packages from the requirements.txt for this project.
 '''
 
-# mencari lokasi file .env secara otomatis 
-dotenv_path = find_dotenv()
-
-# load the entries as environtment variables
-load_dotenv(dotenv_path)
-
-
-
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
+app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -69,15 +56,9 @@ def load_user(id):
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
-
-#### MIGRATE 
-migrate = Migrate(app, db)
-
-#from app import routes, models
 
 # create gravatar 
 gravatar = Gravatar(app,
