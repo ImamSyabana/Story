@@ -2,12 +2,15 @@
 # Python cache
 __pycache__/
 
-# Instance folder for local DB
+# Instance Folder & DB files
 instance/
+*.db
+*.sqlite3
 
 # Virtual Environment Folder (VERY IMPORTANT)
 venv/
 .venv/
+envs/
 
 # System files
 .DS_Store
