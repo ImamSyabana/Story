@@ -8,6 +8,9 @@ from sqlalchemy.orm import DeclarativeBase
 import os
 from dotenv import load_dotenv, find_dotenv
 from markupsafe import Markup
+from flask_migrate import Migrate
+from config import Config
+import logging
 
 # Find and load environment variables from .env file
 dotenv_path = find_dotenv()
@@ -17,20 +20,25 @@ load_dotenv(dotenv_path)
 class Base(DeclarativeBase):
     pass
 
-db = SQLAlchemy(model_class=Base)
 
 # Create the Flask app instance
 app = Flask(__name__)
-
 # Configure the app
-app.config['SECRET_KEY'] = os.getenv("FLASK_KEY")
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object(Config)
+
+
+db = SQLAlchemy(app)
+
+migrate = Migrate(app, db)
+
+from app import routes, models
+
 
 # Initialize extensions
 ckeditor = CKEditor(app)
 Bootstrap(app)
 db.init_app(app)
+
 
 # Configure Flask-Login
 login_manager = LoginManager()
@@ -53,3 +61,12 @@ from app import routes, models
 # Create all database tables
 with app.app_context():
     db.create_all()
+
+# Setup console logging
+if not app.debug:
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(logging.INFO)
+    app.logger.addHandler(stream_handler)
+
+app.logger.setLevel(logging.INFO)
+app.logger.info('Flask App startup')
